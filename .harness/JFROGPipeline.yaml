@@ -1,0 +1,41 @@
+pipeline:
+  name: JFROG-Pipeline
+  identifier: JFROGPipeline
+  projectIdentifier: Manish
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: manishrepo
+        repoName: JFROG_Demo-Harness
+        build: <+input>
+  stages:
+    - stage:
+        name: JFROG
+        identifier: JFROG
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: ArtifactoryUpload
+                  name: ArtifactoryUpload_1
+                  identifier: ArtifactoryUpload_1
+                  spec:
+                    connectorRef: JFROGharness
+                    target: harness-ci-jfrog-build-info/
+                    sourcePath: "*.jar"
+                  description: POC-purpose.
